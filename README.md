@@ -1,5 +1,18 @@
 # Minimal test for React Router's v8_middleware on Cloudflare Workers
 
+It appears that `v8_middleware` works on Cloudflare Workers,
+at least for the dev server! The React Router documentation says
+that the `entry.server.tsx` file is optional, so I mistakenly
+deleted it -- it turns out that this file _is_ required for Cloudflare,
+presumably because it contains some differences from the
+default version. I was not aware of that.
+
+If you are seeing a similar error message as what you see in this
+file below, try grabbing the `entry.server.tsx` file from this
+repo, and putting it in place!
+
+# Original problem
+
 It appears that `v8_middleware` fails on Cloudflare Workers,
 at least for the dev server. To create this repo, I did the following:
 
@@ -11,7 +24,7 @@ at least for the dev server. To create this repo, I did the following:
 
 2. Set `v8_middleware: true` in `react-router.config.ts`
 
-3. Deleted `entry.server.tsx` and added `@react-router/node` to the dependencies, to ensure that we're using the default React Router server entry code.
+3. ~~Deleted `entry.server.tsx` and added `@react-router/node` to the dependencies, to ensure that we're using the default React Router server entry code.~~ (this was the problem)
 
 4. Added an `app/context.ts` file, with a context for the
   Cloudflare environment
